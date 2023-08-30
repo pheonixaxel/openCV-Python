@@ -38,30 +38,3 @@ if locations:
 
     cv.imshow('Matches', map_img)
     cv.waitKey()
-
-
-#
-# # get the best match position
-# min_val, max_val, min_loc, max_loc = cv.minMaxLoc(result)
-#
-# # pyautogui.rightClick(min_loc[0], min_loc[1])
-#
-# print('Best match top left position: %s' % str(max_loc))
-# print('Best match confidence: %s' % max_val)
-# print('--------------------------')
-# print('Least match top left position: %s' % str(min_loc))
-# print('Least match confidence: %s' % min_val)
-#
-# threshold = 0.8
-# if max_val >= threshold:
-#     print('Found metin stone')
-#
-#     top_left = max_loc
-#     bottom_right = (top_left[0] + metin_stone_img.shape[1], top_left[1] + metin_stone_img.shape[0])
-#
-#     cv.rectangle(map_img, top_left, bottom_right, color=(0, 255, 0), thickness=2, lineType=cv.LINE_4)
-#     cv.imshow('result', map_img)
-#     cv.waitKey()
-#
-# else:
-#     print('Metin stone not found')
