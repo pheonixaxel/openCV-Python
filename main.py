@@ -17,6 +17,7 @@ print(locations)
 
 locations = list(zip(*locations[::-1]))
 print(locations)
+### If locations is not empty, we have found some object matches
 
 
 if locations:
