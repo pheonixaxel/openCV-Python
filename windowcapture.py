@@ -1,10 +1,9 @@
 import numpy as np
-import win32con
-import win32gui
-import win32ui
+import win32con, win32gui, win32ui
 
 
 class WindowCapture:
+
     # properties
     w = 0
     h = 0
@@ -17,7 +16,7 @@ class WindowCapture:
     # constructor
     def __init__(self, window_name=None):
         # find the handle for the window we want to capture
-
+        # if no window name is given, capture the entire screen
         if window_name is None:
             self.hwnd = win32gui.GetDesktopWindow()
         else:
@@ -38,7 +37,7 @@ class WindowCapture:
         self.cropped_x = border_pixels
         self.cropped_y = titlebar_pixels
 
-        # set the cropped coordinates offset so we can translate screenshot
+        # set the cropped coordinates offset, so we can translate screenshot
         # images into actual screen positions
         self.offset_x = window_rect[0] + self.cropped_x
         self.offset_y = window_rect[1] + self.cropped_y
@@ -97,4 +96,4 @@ class WindowCapture:
     # return incorrect coordinates, because the window position is only calculated in
     # the __init__ constructor.
     def get_screen_position(self, pos):
-        return (pos[0] + self.offset_x, pos[1] + self.offset_y)
+        return pos[0] + self.offset_x, pos[1] + self.offset_y

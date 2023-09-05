@@ -1,36 +1,66 @@
 import os
+import numpy as np
 from time import time
 
 import cv2 as cv
-import numpy as np
-import pyautogui
+from hsvfilter import HsvFilter
 
 from windowcapture import WindowCapture
-from vision import Vision
+# from vision import Vision
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-WindowCapture.list_window_names()
 
+# initialize the WindowCapture class
 wincap = WindowCapture('Rodnia - The King\'s Return')
-# metin_paths = ['screenshots/metin1.png', 'screenshots/metin2.png', 'screenshots/metin3.png', 'screenshots/metin4.png', 'screenshots/metin5.png']
+# initialize the Vision class
+# vision = Vision('screenshots/metin.png')
+# initialize the trackbar window
+# vision.init_control_gui()
 
-vision = Vision('screenshots/metin.png')
+# metin_paths = ['screenshots/metin1.png', 'screenshots/metin2.png', 'screenshots/metin3.png',
+# 'screenshots/metin4.png', 'screenshots/metin5.png']
+
+
+
+# # initialize the trackbar window
+# hsv_filter = HsvFilter(0, 180, 129, 179, 255, 255, 0, 0, 67, 0)
 
 loop_time = time()
 while True:
 
+    # get an updated image of the game
     screenshot = wincap.get_screenshot()
 
-    points = vision.find_metin(screenshot, debug_mode='rectangles')
+    # pre-process the image
+    # processed_image = vision.apply_hsv_filter(screenshot)
 
-    # cv.imshow('Metin2', screenshot)
+    # do object detection
+    # rectangles = vision.find_metin(processed_image)
 
+    # draw the detection results onto the original image
+    # output_image = vision.draw_rectangles(screenshot, rectangles)
+
+    # cv.imshow('Processed', processed_image)
+    # cv.imshow('Matches', output_image)
+
+    cv.imshow('Unprocessed', screenshot)
+
+    # debug the loop rate
     print('FPS{}'.format(1 / (time() - loop_time)))
     loop_time = time()
 
-    if cv.waitKey(1) == ord('q'):
+    # press 'q' with the output window focused to exit.
+    # waits 1 ms every loop to process key presses
+    key = cv.waitKey(1)
+    if key == ord('q'):
         cv.destroyAllWindows()
         break
+    elif key == ord('f'):
+        cv.imwrite('positive/{}.png'.format(loop_time), screenshot)
+    elif key == ord('d'):
+        cv.imwrite('negative/{}.png'.format(loop_time), screenshot)
 
 print('done')
+
+
